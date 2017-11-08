@@ -17,8 +17,11 @@ public class Pilot : MonoBehaviour {
 	void Update () {
 
 		Vector3 moveCamTo = transform.position - transform.forward * 10.0f + Vector3.up * 5.0f;
-		Camera.main.transform.position = moveCamTo;
-		Camera.main.transform.LookAt (transform.position);
+
+		float bias = 0.96f;
+		Camera.main.transform.position = Camera.main.transform.position * bias + 
+										moveCamTo * (1.0f -bias);
+		Camera.main.transform.LookAt (transform.position + transform.forward * 30.0f);//increase with speed
 		transform.position += transform.forward * Time.deltaTime * speed;
 
 		speed -= transform.forward.y * Time.deltaTime * 5.0f;
